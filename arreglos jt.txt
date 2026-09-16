@@ -1,0 +1,4 @@
+multiplicacion=4*5
+while multiplicacion >=4:
+    print (multiplicacion)
+    multiplicacion =4*5

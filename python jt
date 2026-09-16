@@ -1,0 +1,4 @@
+dias= ["lunes, martes, miercoles, jueves, viernes, sabado, domingo"]
+for dias in dias:
+    print(dias)
+for dias in "martes 4/08/2026"

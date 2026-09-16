@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colores · SOF-LEX CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .color-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(178,100,130,.1);
+      transition: .28s;
+    }
+    .color-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(178,100,130,.18);
+    }
+
+    .color-swatch {
+      height: 110px;
+      width: 100%;
+    }
+
+    .color-info {
+      padding: 20px;
+    }
+    .color-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--plum);
+      margin-bottom: 4px;
+    }
+    .color-hex {
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      font-family: monospace;
+    }
+    .color-desc {
+      font-size: 14px;
+      color: var(--text-main);
+      line-height: 1.65;
+    }
+
+    /* Donde se usa */
+    .color-usage {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .usage-tag {
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(199,116,149,.1);
+      color: var(--plum);
+    }
+
+    /* Sección paleta completa */
+    .palette-row {
+      display: flex;
+      border-radius: 16px;
+      overflow: hidden;
+      height: 60px;
+      box-shadow: 0 4px 16px rgba(178,100,130,.12);
+      margin-bottom: 10px;
+    }
+    .palette-seg { flex: 1; }
+
+    .intro-text {
+      font-size: 16px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 30px;
+      max-width: 700px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <img src="../logo.png" alt="SOF-LEX CODE">
+    <div>
+      <div class="brand-name">SOF-LEX CODE</div>
+      <div class="brand-tagline">Elegancia en cada línea de código</div>
+    </div>
+  </div>
+  <nav class="nav-center">
+    <a href="../index.php"><i class="fa-solid fa-house"></i> Inicio</a>
+    <a href="servicios.html"><i class="fa-solid fa-briefcase"></i> Servicios</a>
+    <a href="solicitar.html"><i class="fa-solid fa-concierge-bell"></i> Solicitar</a>
+    <a href="quejas.html"><i class="fa-solid fa-comment-dots"></i> Quejas</a>
+  </nav>
+  <div id="sp"></div>
+</header>
+
+<div class="page-wrap">
+  <div class="inner-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="glass-card inner-sidebar">
+      <div class="sidebar-title">Nosotros</div>
+      <a href="historia.html"><i class="fa-solid fa-book"></i> Historia</a>
+      <a href="mision.html"><i class="fa-solid fa-bullseye"></i> Mision</a>
+      <a href="vision.html"><i class="fa-solid fa-eye"></i> Vision</a>
+      <a href="valores.html"><i class="fa-solid fa-heart"></i> Valores</a>
+      <a href="colores.html" class="active"><i class="fa-solid fa-palette"></i> Colores</a>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main>
+      <h1 style="font-family:'Playfair Display',serif;font-size:38px;color:var(--plum);margin-bottom:16px;">
+        Nuestra Paleta de Colores
+      </h1>
+
+      <p class="intro-text">
+        Los colores de SOF-LEX CODE no son aleatorios. Cada tono fue elegido con intencion para
+        transmitir elegancia, confianza y feminidad profesional. Juntos crean una identidad visual
+        coherente, moderna y memorable.
+      </p>
+
+      <!-- Paleta visual -->
+      <div class="info-card" style="margin-bottom:28px;">
+        <div class="info-card-header">Paleta completa</div>
+        <div class="info-card-body">
+          <div class="palette-row">
+            <div class="palette-seg" style="background:#fff0f6;"></div>
+            <div class="palette-seg" style="background:#f8d7e8;"></div>
+            <div class="palette-seg" style="background:#e8a0c0;"></div>
+            <div class="palette-seg" style="background:#c77495;"></div>
+            <div class="palette-seg" style="background:#b16d86;"></div>
+            <div class="palette-seg" style="background:#c17ccf;"></div>
+          </div>
+          <p style="font-size:13px;color:var(--text-light);text-align:center;">
+            De los tonos mas claros a los mas intensos — la escala completa de SOF-LEX CODE
+          </p>
+        </div>
+      </div>
+
+      <!-- Cards de cada color -->
+      <div class="color-grid">
+
+        <div class="color-card">
+          <div class="color-swatch" style="background:#fff0f6;"></div>
+          <div class="color-info">
+            <div class="color-name">Rosa Marfil</div>
+            <div class="color-hex">#FFF0F6</div>
+            <div class="color-desc">
+              El blanco con alma. Este tono casi transparente es la base del fondo de toda la pagina.
+              Evoca pureza, ligereza y delicadeza sin saturar la vista.
+            </div>
+            <div class="color-usage">
+              <span class="usage-tag">Fondo principal</span>
+              <span class="usage-tag">Gradiente de fondo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background:#f8d7e8;"></div>
+          <div class="color-info">
+            <div class="color-name">Rosa Suave</div>
+            <div class="color-hex">#F8D7E8</div>
+            <div class="color-desc">
+              Un rosa tierno y luminoso que aporta calidez a la interfaz.
+              Representa feminidad elegante y cercanía con el usuario.
+            </div>
+            <div class="color-usage">
+              <span class="usage-tag">Botones secundarios</span>
+              <span class="usage-tag">Fondos de tarjetas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background:#e8a0c0;"></div>
+          <div class="color-info">
+            <div class="color-name">Rosa Medio</div>
+            <div class="color-hex">#E8A0C0</div>
+            <div class="color-desc">
+              El tono de transicion entre lo suave y lo intenso. Da equilibrio a la paleta
+              y se usa en acentos decorativos y bordes de elementos.
+            </div>
+            <div class="color-usage">
+              <span class="usage-tag">Iconos de servicio</span>
+              <span class="usage-tag">Acentos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background:#c77495;"></div>
+          <div class="color-info">
+            <div class="color-name">Rosa Principal</div>
+            <div class="color-hex">#C77495</div>
+            <div class="color-desc">
+              El color principal de accion de SOF-LEX CODE. Cálido, decidido y profesional.
+              Transmite confianza y personalidad sin ser agresivo.
+            </div>
+            <div class="color-usage">
+              <span class="usage-tag">Botones principales</span>
+              <span class="usage-tag">Encabezados de tabla</span>
+              <span class="usage-tag">Call to action</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background:#b16d86;"></div>
+          <div class="color-info">
+            <div class="color-name">Ciruelo</div>
+            <div class="color-hex">#B16D86</div>
+            <div class="color-desc">
+              El tono mas oscuro de la familia rosa. Proyecta autoridad y sofisticacion.
+              Se usa en titulos principales para dar jerarquia visual y elegancia.
+            </div>
+            <div class="color-usage">
+              <span class="usage-tag">Titulos y headings</span>
+              <span class="usage-tag">Nombre de empresa</span>
+              <span class="usage-tag">Texto destacado</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background:linear-gradient(135deg,#c77495,#c17ccf);"></div>
+          <div class="color-info">
+            <div class="color-name">Malva / Purpura</div>
+            <div class="color-hex">#C17CCF</div>
+            <div class="color-desc">
+              Un toque de purpura que eleva la paleta hacia lo creativo e innovador.
+              Aporta profundidad y contraste sin romper la armonia del conjunto.
+            </div>
+            <div class="color-usage">
+              <span class="usage-tag">Cabeceras de tarjetas</span>
+              <span class="usage-tag">Gradientes</span>
+              <span class="usage-tag">Elementos premium</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background:rgba(255,255,255,0.65);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.5);"></div>
+          <div class="color-info">
+            <div class="color-name">Cristal / Glassmorphism</div>
+            <div class="color-hex">rgba(255,255,255, 0.65)</div>
+            <div class="color-desc">
+              No es un color, es un efecto. El vidrio esmerilado que cubre las tarjetas y paneles
+              crea profundidad visual y modernidad, dando la sensacion de capas y dimension.
+            </div>
+            <div class="color-usage">
+              <span class="usage-tag">Tarjetas principales</span>
+              <span class="usage-tag">Header</span>
+              <span class="usage-tag">Panel de login</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-swatch" style="background:#6d4b5a;"></div>
+          <div class="color-info">
+            <div class="color-name">Vino Suave</div>
+            <div class="color-hex">#6D4B5A</div>
+            <div class="color-desc">
+              El color del texto principal. Lo suficientemente oscuro para ser legible,
+              lo suficientemente calido para no sentirse frio ni corporativo.
+            </div>
+            <div class="color-usage">
+              <span class="usage-tag">Texto de cuerpo</span>
+              <span class="usage-tag">Parrafos</span>
+              <span class="usage-tag">Etiquetas</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mensaje final -->
+      <div class="info-card">
+        <div class="info-card-header">Por que esta paleta?</div>
+        <div class="info-card-body">
+          <p>
+            En SOF-LEX CODE creemos que la tecnologia puede ser elegante. Elegimos una paleta
+            rosada y malva porque rompe con los cliches del azul corporativo y proyecta
+            una identidad unica, moderna y autentica.
+          </p>
+          <p>
+            Los tonos calidos generan confianza y cercania con el cliente, mientras que el
+            efecto glassmorphism y las tipografias serif aportan la sofisticacion que
+            diferencia nuestros proyectos.
+          </p>
+          <p>
+            Cada color tiene un rol especifico en la jerarquia visual: los tonos claros
+            crean espacio y respiro, los medios guian la atencion, y los oscuros anclan
+            los titulos y acciones clave.
+          </p>
+        </div>
+      </div>
+
+      <a href="../index.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+    </main>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">SOF-LEX CODE</div>
+  <div class="socials">
+    <a href="https://wa.me/573001234567" target="_blank" class="soc-wa"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://instagram.com/" target="_blank" class="soc-ig"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://facebook.com/" target="_blank" class="soc-fb"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="https://x.com/" target="_blank" class="soc-tw"><i class="fa-brands fa-x-twitter"></i></a>
+  </div>
+  <p>2025 SOF-LEX CODE · Todos los derechos reservados</p>
+</footer>
+
+<script>
+fetch('../api/sesion.php').then(r=>r.json()).then(d=>{
+  const sp = document.getElementById('sp');
+  if (d.logueado) {
+    sp.innerHTML = `<span class="user-badge"><i class="fa-solid fa-user"></i> ${d.usuario}</span>
+    <a href="../api/logout.php" style="padding:8px 14px;border-radius:50px;background:rgba(255,255,255,.6);border:1.5px solid rgba(199,116,149,.3);color:var(--plum);text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`;
+  } else {
+    sp.innerHTML = `<a href="../index.php" style="padding:8px 14px;border-radius:50px;background:linear-gradient(135deg,var(--pink-dark),var(--plum));color:#fff;text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-lock"></i> Iniciar Sesion</a>`;
+  }
+});
+</script>
+</body>
+</html>

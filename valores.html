@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valores · SOF-LEX CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    .valor-item {
+      display: flex; align-items: flex-start; gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(199,116,149,.1);
+    }
+    .valor-item:last-child { border-bottom: none; }
+    .valor-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg,var(--pink-dark),var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #fff;
+    }
+    .valor-item h4 { color: var(--plum); font-size: 16px; margin-bottom: 4px; font-family:'Playfair Display',serif; }
+    .valor-item p  { color: var(--text-light); font-size: 14px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <img src="../logo.png" alt="SOF-LEX CODE">
+    <div>
+      <div class="brand-name">SOF-LEX CODE</div>
+      <div class="brand-tagline">Elegancia en cada línea de código</div>
+    </div>
+  </div>
+  <nav class="nav-center">
+    <a href="../index.php"><i class="fa-solid fa-house"></i> Inicio</a>
+    <a href="servicios.html"><i class="fa-solid fa-briefcase"></i> Servicios</a>
+    <a href="solicitar.html"><i class="fa-solid fa-concierge-bell"></i> Solicitar</a>
+    <a href="quejas.html"><i class="fa-solid fa-comment-dots"></i> Quejas</a>
+  </nav>
+  <div id="sp"></div>
+</header>
+
+<div class="page-wrap">
+  <div class="inner-layout">
+
+    <aside class="glass-card inner-sidebar">
+      <div class="sidebar-title">Nosotros</div>
+      <a href="historia.html"><i class="fa-solid fa-book"></i> Historia</a>
+      <a href="mision.html"><i class="fa-solid fa-bullseye"></i> Mision</a>
+      <a href="vision.html"><i class="fa-solid fa-eye"></i> Vision</a>
+      <a href="valores.html" class="active"><i class="fa-solid fa-heart"></i> Valores</a>
+      <a href="colores.html"><i class="fa-solid fa-palette"></i> Colores</a>
+    </aside>
+
+    <main>
+      <h1 style="font-family:'Playfair Display',serif;font-size:38px;color:var(--plum);margin-bottom:22px;">
+        Valores
+      </h1>
+      <div class="info-card">
+        <div class="info-card-header">Nuestros Valores</div>
+        <div class="info-card-body">
+          <div class="valor-item">
+            <div class="valor-icon"><i class="fa-solid fa-handshake"></i></div>
+            <div><h4>Compromiso</h4><p>Entregamos cada proyecto con dedicacion total, cumpliendo plazos y superando expectativas.</p></div>
+          </div>
+          <div class="valor-item">
+            <div class="valor-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <div><h4>Innovacion</h4><p>Buscamos constantemente nuevas y mejores soluciones tecnologicas para nuestros clientes.</p></div>
+          </div>
+          <div class="valor-item">
+            <div class="valor-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div><h4>Honestidad</h4><p>Actuamos con transparencia y responsabilidad en cada decision y cada relacion profesional.</p></div>
+          </div>
+          <div class="valor-item">
+            <div class="valor-icon"><i class="fa-solid fa-people-group"></i></div>
+            <div><h4>Trabajo en equipo</h4><p>Colaboramos de manera coordinada para lograr resultados excepcionales y duraderos.</p></div>
+          </div>
+          <div class="valor-item">
+            <div class="valor-icon"><i class="fa-solid fa-star"></i></div>
+            <div><h4>Excelencia</h4><p>Aplicamos los mas altos estandares de calidad en cada linea de codigo y cada diseno que creamos.</p></div>
+          </div>
+          <div class="valor-item">
+            <div class="valor-icon"><i class="fa-solid fa-brush"></i></div>
+            <div><h4>Creatividad</h4><p>Combinamos tecnologia y diseño para construir soluciones que ademas de funcionar, enamoran.</p></div>
+          </div>
+        </div>
+      </div>
+      <a href="../index.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">SOF-LEX CODE</div>
+  <p>2025 SOF-LEX CODE · Todos los derechos reservados</p>
+</footer>
+<script>
+fetch('../api/sesion.php').then(r=>r.json()).then(d=>{
+  const sp = document.getElementById('sp');
+  if (d.logueado) {
+    sp.innerHTML = `<span class="user-badge"><i class="fa-solid fa-user"></i> ${d.usuario}</span>
+    <a href="../api/logout.php" style="padding:8px 14px;border-radius:50px;background:rgba(255,255,255,.6);border:1.5px solid rgba(199,116,149,.3);color:var(--plum);text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`;
+  } else {
+    sp.innerHTML = `<a href="../index.php" style="padding:8px 14px;border-radius:50px;background:linear-gradient(135deg,var(--pink-dark),var(--plum));color:#fff;text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-lock"></i> Iniciar Sesion</a>`;
+  }
+});
+</script>
+</body>
+</html>

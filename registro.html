@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Cuenta · SOF-LEX CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<span class="petal" style="top:8%;left:2%;animation-delay:1s;">🌸</span>
+<span class="petal" style="top:70%;right:2%;animation-delay:3s;">✿</span>
+
+<header>
+  <div class="logo-wrap">
+    <img src="../logo.png" alt="SOF-LEX CODE">
+    <div><div class="brand-name">SOF-LEX CODE</div><div class="brand-tagline">Elegancia en cada línea de código</div></div>
+  </div>
+  <nav class="nav-center">
+    <a href="../index.php"><i class="fa-solid fa-house"></i> Inicio</a>
+  </nav>
+</header>
+
+<div style="min-height:calc(100vh - 200px);display:flex;align-items:center;justify-content:center;padding:40px 20px;">
+  <div class="glass-card" style="padding:38px;width:100%;max-width:460px;">
+
+    <h1 style="font-family:'Playfair Display',serif;font-size:32px;color:var(--plum);text-align:center;margin-bottom:6px;">
+      ✨ Crear Cuenta
+    </h1>
+    <p style="text-align:center;color:var(--text-light);font-size:14px;margin-bottom:24px;">
+      Únete a SOF-LEX CODE y accede a todos nuestros servicios
+    </p>
+
+    <div id="msg-err" class="alert alert-error" style="display:none;"></div>
+
+    <form action="../api/registrar.php" method="POST">
+      <div class="form-group">
+        <label><i class="fa-solid fa-user"></i> &nbsp;Usuario</label>
+        <input type="text" name="usuario" placeholder="Elige un nombre de usuario" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-envelope"></i> &nbsp;Correo Electrónico</label>
+        <input type="email" name="correo" placeholder="tucorreo@email.com" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label><i class="fa-solid fa-lock"></i> &nbsp;Contraseña</label>
+        <input type="password" name="password" placeholder="Mínimo 6 caracteres" minlength="6" required autocomplete="new-password">
+      </div>
+      <button type="submit" name="registrar" class="btn-submit">
+        <i class="fa-solid fa-user-plus"></i> &nbsp;Crear Cuenta
+      </button>
+    </form>
+
+    <div style="text-align:center;margin-top:18px;font-size:13px;color:var(--text-light);">
+      ¿Ya tienes cuenta?
+      <a href="../index.php" style="color:var(--pink-dark);font-weight:700;text-decoration:none;">
+        Iniciar sesión
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<footer><p>© 2025 SOF-LEX CODE · Todos los derechos reservados</p></footer>
+
+<script>
+// Mostrar error si viene de redirección
+const p = new URLSearchParams(location.search);
+if (p.get('error')) {
+  fetch('../api/sesion.php').then(r=>r.json()).then(d=>{
+    // El error viene en session, mostramos genérico
+    document.getElementById('msg-err').style.display='block';
+    document.getElementById('msg-err').innerHTML =
+      '<i class="fa-solid fa-circle-exclamation"></i> El usuario o correo ya existe. Intenta con otro.';
+  });
+}
+</script>
+</body>
+</html>

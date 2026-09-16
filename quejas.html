@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quejas y Sugerencias · SOF-LEX CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<span class="petal" style="top:8%;left:2%;animation-delay:1s;">🌸</span>
+<span class="petal" style="top:70%;right:2%;animation-delay:3s;">✿</span>
+
+<header>
+  <div class="logo-wrap">
+    <img src="../logo.png" alt="SOF-LEX CODE">
+    <div><div class="brand-name">SOF-LEX CODE</div><div class="brand-tagline">Elegancia en cada línea de código</div></div>
+  </div>
+  <nav class="nav-center">
+    <a href="../index.html"><i class="fa-solid fa-house"></i> Inicio</a>
+    <a href="servicios.html"><i class="fa-solid fa-briefcase"></i> Servicios</a>
+    <a href="solicitar.html"><i class="fa-solid fa-concierge-bell"></i> Solicitar</a>
+    <a href="quejas.html" class="active"><i class="fa-solid fa-comment-dots"></i> Quejas</a>
+  </nav>
+  <div class="session-pill" id="sp"></div>
+</header>
+
+<div class="page-wrap" style="max-width:680px;">
+  <div style="text-align:center;margin-bottom:28px;">
+    <h1 style="font-family:'Playfair Display',serif;font-size:40px;color:var(--plum);">💬 Quejas y Sugerencias</h1>
+    <p style="color:var(--text-light);margin-top:8px;">Tu opinión nos ayuda a mejorar. ¡Escríbenos con confianza!</p>
+  </div>
+
+  <div id="msg-ok" class="alert alert-success" style="display:none;">
+    <i class="fa-solid fa-circle-check"></i> ¡Mensaje enviado correctamente! Gracias por contactarnos.
+  </div>
+  <div id="msg-err" class="alert alert-error" style="display:none;">
+    <i class="fa-solid fa-circle-exclamation"></i> Hubo un error al enviar. Intenta de nuevo.
+  </div>
+
+  <div class="glass-card" style="padding:32px;">
+    <form action="../api/guardar_queja.php" method="POST">
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-user"></i> &nbsp;Nombre Completo</label>
+        <input type="text" name="nombre" id="inp-nombre" placeholder="Tu nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-envelope"></i> &nbsp;Correo Electrónico</label>
+        <input type="email" name="correo" placeholder="tucorreo@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-tag"></i> &nbsp;Tipo de mensaje</label>
+        <div class="tipo-tabs">
+          <div class="tipo-tab active" onclick="setTipo('queja',this)">
+            <i class="fa-solid fa-face-frown"></i> Queja
+          </div>
+          <div class="tipo-tab" onclick="setTipo('sugerencia',this)">
+            <i class="fa-solid fa-lightbulb"></i> Sugerencia
+          </div>
+        </div>
+        <input type="hidden" name="tipo" id="tipo-hidden" value="queja">
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-message"></i> &nbsp;Tu mensaje</label>
+        <textarea name="mensaje" placeholder="Escribe tu queja o sugerencia aquí..." required></textarea>
+      </div>
+
+      <button type="submit" name="enviar" class="btn-submit">
+        <i class="fa-solid fa-paper-plane"></i> &nbsp;Enviar Mensaje
+      </button>
+
+    </form>
+  </div>
+
+  <a href="../index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+</div>
+
+<footer>
+  <div class="footer-brand">SOF-LEX CODE 💗</div>
+  <p>© 2025 SOF-LEX CODE · Todos los derechos reservados</p>
+</footer>
+
+<script>
+const p = new URLSearchParams(location.search);
+if(p.get('ok'))    document.getElementById('msg-ok').style.display='block';
+if(p.get('error')) document.getElementById('msg-err').style.display='block';
+
+function setTipo(val,el){
+  document.getElementById('tipo-hidden').value=val;
+  document.querySelectorAll('.tipo-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+fetch('../api/sesion.php').then(r=>r.json()).then(d=>{
+  const sp=document.getElementById('sp');
+  if(d.logueado){
+    document.getElementById('inp-nombre').value=d.usuario;
+    sp.innerHTML=`<span class="user-badge"><i class="fa-solid fa-user"></i> ${d.usuario}</span>
+    <a href="../api/logout.php" style="padding:8px 14px;border-radius:50px;background:rgba(255,255,255,.6);border:1.5px solid rgba(199,116,149,.3);color:var(--plum);text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`;
+  } else {
+    sp.innerHTML=`<a href="../index.html" class="btn-login-pill"><i class="fa-solid fa-lock"></i> Iniciar Sesión</a>`;
+  }
+});
+</script>
+</body>
+</html>

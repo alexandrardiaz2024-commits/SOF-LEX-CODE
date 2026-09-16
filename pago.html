@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forma de Pago · SOF-LEX CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../assets/translator.css">
+  <style>
+    /* Tarjetas de método de pago */
+    .metodos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .metodo-card {
+      border: 2.5px solid rgba(199,116,149,.2);
+      border-radius: 16px;
+      padding: 18px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: .22s;
+      background: rgba(255,255,255,.7);
+    }
+    .metodo-card:hover {
+      border-color: var(--pink-dark);
+      background: rgba(255,255,255,.95);
+    }
+    .metodo-card.selected {
+      border-color: var(--pink-dark);
+      background: linear-gradient(135deg,#fde8f2,#f9d0e4);
+      box-shadow: 0 4px 14px rgba(199,116,149,.25);
+    }
+    .metodo-card input[type="radio"] { display:none; }
+
+    .metodo-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .metodo-card .metodo-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--plum);
+    }
+
+    /* Nequi */
+    .ic-nequi    { background: #6C1D8E; color:#fff; }
+    /* Daviplata */
+    .ic-davi     { background: #E31837; color:#fff; }
+    /* Tarjeta crédito */
+    .ic-credito  { background: linear-gradient(135deg,#1a1a2e,#16213e); color:#fff; }
+    /* Tarjeta débito */
+    .ic-debito   { background: linear-gradient(135deg,#0f3460,#533483); color:#fff; }
+    /* PSE */
+    .ic-pse      { background: #00529B; color:#fff; }
+    /* Efecty */
+    .ic-efecty   { background: #FFD700; color:#333; }
+    /* Otro */
+    .ic-otro     { background: linear-gradient(135deg,var(--pink-dark),var(--purple)); color:#fff; }
+
+    /* Resumen de solicitud */
+    .resumen-box {
+      background: linear-gradient(135deg,#fde8f2,#f9d0e4);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(199,116,149,.2);
+    }
+    .resumen-box .r-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--plum);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .resumen-row {
+      display: flex; justify-content: space-between;
+      font-size: 13px; color: var(--text-main);
+      padding: 4px 0; border-bottom: 1px solid rgba(199,116,149,.1);
+    }
+    .resumen-row:last-child { border-bottom: none; }
+    .resumen-row span:last-child { font-weight: 700; color: var(--plum); }
+
+    /* Info específica por método */
+    .info-metodo {
+      background: rgba(255,255,255,.8);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 18px;
+      border-left: 4px solid var(--pink-dark);
+      font-size: 14px;
+      color: var(--text-main);
+      line-height: 1.7;
+      display: none;
+    }
+    .info-metodo.visible { display: block; }
+    .info-metodo strong { color: var(--plum); }
+
+    .step-bar { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:28px; }
+    .step-done { display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px 0 0 50px;background:rgba(255,255,255,.6);border:1.5px solid rgba(199,116,149,.2);color:var(--text-light);font-size:13px;font-weight:700; }
+    .step-active { display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:0 50px 50px 0;background:linear-gradient(135deg,var(--pink-dark),var(--plum));color:#fff;font-size:13px;font-weight:700; }
+    .step-conn { width:30px;height:3px;background:var(--pink-dark); }
+  </style>
+</head>
+<body>
+
+<div id="gte-hidden" style="display:none;"></div>
+
+<header>
+  <div class="logo-wrap">
+    <img src="../logo.png" alt="SOF-LEX CODE">
+    <div>
+      <div class="brand-name">SOF-LEX CODE</div>
+      <div class="brand-tagline">Elegancia en cada línea de código</div>
+    </div>
+  </div>
+  <nav class="nav-center">
+    <a href="../index.php"><i class="fa-solid fa-house"></i> Inicio</a>
+    <a href="servicios.html"><i class="fa-solid fa-briefcase"></i> Servicios</a>
+    <a href="solicitar.html"><i class="fa-solid fa-concierge-bell"></i> Solicitar</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="translator-wrap">
+      <button class="translator-btn" onclick="toggleLangMenu()">
+        <i class="fa-solid fa-globe"></i>
+        <span id="lang-btn-label">Idioma</span>
+        <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option active" data-lang="es" onclick="cambiarIdioma('es')"><span class="flag">🇨🇴</span> Español</button>
+        <div class="lang-divider"></div>
+        <button class="lang-option" data-lang="en" onclick="cambiarIdioma('en')"><span class="flag">🇺🇸</span> English</button>
+        <button class="lang-option" data-lang="fr" onclick="cambiarIdioma('fr')"><span class="flag">🇫🇷</span> Français</button>
+        <button class="lang-option" data-lang="pt" onclick="cambiarIdioma('pt')"><span class="flag">🇧🇷</span> Português</button>
+        <button class="lang-option" data-lang="it" onclick="cambiarIdioma('it')"><span class="flag">🇮🇹</span> Italiano</button>
+      </div>
+    </div>
+    <div id="sp"></div>
+  </div>
+</header>
+
+<div class="page-wrap" style="max-width:700px;">
+
+  <div style="text-align:center;margin-bottom:24px;">
+    <h1 style="font-family:'Playfair Display',serif;font-size:38px;color:var(--plum);">Forma de Pago</h1>
+    <p style="color:var(--text-light);margin-top:6px;">Selecciona cómo deseas realizar el pago de tu servicio.</p>
+  </div>
+
+  <!-- Paso 2 activo -->
+  <div class="step-bar">
+    <div class="step-done"><i class="fa-solid fa-check"></i> Solicitud</div>
+    <div class="step-conn"></div>
+    <div class="step-active"><i class="fa-solid fa-credit-card"></i> Pago</div>
+  </div>
+
+  <!-- Resumen de solicitud -->
+  <div class="resumen-box" id="resumen-box">
+    <div class="r-title"><i class="fa-solid fa-receipt" style="color:var(--pink-dark);margin-right:6px;"></i> Resumen de tu solicitud</div>
+    <div class="resumen-row"><span>Nombre</span><span id="r-nombre">—</span></div>
+    <div class="resumen-row"><span>Correo</span><span id="r-correo">—</span></div>
+    <div class="resumen-row"><span>Servicio</span><span id="r-servicio">—</span></div>
+    <div class="resumen-row" style="margin-top:6px;">
+      <span style="font-weight:700;color:var(--plum);">Total a pagar</span>
+      <span id="r-monto" style="font-family:'Playfair Display',serif;font-size:20px;color:var(--pink-dark);">—</span>
+    </div>
+  </div>
+
+  <!-- Sin datos de sesión -->
+  <div id="sin-sesion" class="alert alert-error" style="display:none;">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    No se encontró una solicitud activa.
+    <a href="solicitar.html" style="color:var(--plum);font-weight:700;margin-left:8px;">Volver a solicitar</a>
+  </div>
+
+  <div id="pago-form-wrap">
+    <div class="glass-card" style="padding:30px;">
+      <form action="../api/guardar_pago.php" method="POST" id="pago-form">
+
+        <!-- Métodos de pago -->
+        <p style="font-weight:700;color:var(--plum);margin-bottom:14px;font-size:15px;">
+          <i class="fa-solid fa-wallet" style="color:var(--pink-dark);margin-right:6px;"></i>
+          Selecciona tu método de pago
+        </p>
+
+        <div class="metodos-grid">
+
+          <label class="metodo-card" onclick="selMetodo('Nequi',this)">
+            <input type="radio" name="metodo_pago" value="Nequi">
+            <div class="metodo-icon ic-nequi"><i class="fa-solid fa-mobile-screen"></i></div>
+            <div class="metodo-name">Nequi</div>
+          </label>
+
+          <label class="metodo-card" onclick="selMetodo('Daviplata',this)">
+            <input type="radio" name="metodo_pago" value="Daviplata">
+            <div class="metodo-icon ic-davi"><i class="fa-solid fa-mobile-screen-button"></i></div>
+            <div class="metodo-name">Daviplata</div>
+          </label>
+
+          <label class="metodo-card" onclick="selMetodo('Tarjeta de Crédito',this)">
+            <input type="radio" name="metodo_pago" value="Tarjeta de Crédito">
+            <div class="metodo-icon ic-credito"><i class="fa-solid fa-credit-card"></i></div>
+            <div class="metodo-name">Tarjeta Crédito</div>
+          </label>
+
+          <label class="metodo-card" onclick="selMetodo('Tarjeta de Débito',this)">
+            <input type="radio" name="metodo_pago" value="Tarjeta de Débito">
+            <div class="metodo-icon ic-debito"><i class="fa-regular fa-credit-card"></i></div>
+            <div class="metodo-name">Tarjeta Débito</div>
+          </label>
+
+          <label class="metodo-card" onclick="selMetodo('PSE',this)">
+            <input type="radio" name="metodo_pago" value="PSE">
+            <div class="metodo-icon ic-pse"><i class="fa-solid fa-building-columns"></i></div>
+            <div class="metodo-name">PSE</div>
+          </label>
+
+          <label class="metodo-card" onclick="selMetodo('Efecty',this)">
+            <input type="radio" name="metodo_pago" value="Efecty">
+            <div class="metodo-icon ic-efecty"><i class="fa-solid fa-money-bill-wave"></i></div>
+            <div class="metodo-name">Efecty</div>
+          </label>
+
+          <label class="metodo-card" onclick="selMetodo('Otro',this)">
+            <input type="radio" name="metodo_pago" value="Otro">
+            <div class="metodo-icon ic-otro"><i class="fa-solid fa-ellipsis"></i></div>
+            <div class="metodo-name">Otro</div>
+          </label>
+
+        </div>
+
+        <!-- Info dinámica según método -->
+        <div class="info-metodo" id="info-Nequi">
+          Realiza tu pago al número <strong>301 234 5678</strong> (Nequi — Paula Soflex).<br>
+          Luego ingresa el número de referencia de la transacción abajo.
+        </div>
+        <div class="info-metodo" id="info-Daviplata">
+          Realiza tu pago al número <strong>301 234 5678</strong> (Daviplata — Paula Soflex).<br>
+          Ingresa el comprobante o código de transacción abajo.
+        </div>
+        <div class="info-metodo" id="info-Tarjeta de Crédito">
+          Un asesor se comunicará contigo para procesar el pago de forma segura.<br>
+          Ingresa el monto acordado y un nombre de referencia.
+        </div>
+        <div class="info-metodo" id="info-Tarjeta de Débito">
+          Un asesor se comunicará contigo para procesar el pago de forma segura.<br>
+          Ingresa el monto acordado y un nombre de referencia.
+        </div>
+        <div class="info-metodo" id="info-PSE">
+          Serás contactado con las instrucciones de pago PSE desde tu banco.<br>
+          Ingresa el nombre de tu banco como referencia.
+        </div>
+        <div class="info-metodo" id="info-Efecty">
+          Paga en cualquier punto Efecty con el código de convenio <strong>2345678</strong>.<br>
+          Guarda el comprobante e ingresa el número de autorización abajo.
+        </div>
+        <div class="info-metodo" id="info-Otro">
+          Cuéntanos tu método de pago preferido en el campo de referencia.<br>
+          Un asesor te contactará para coordinar.
+        </div>
+
+        <!-- Referencia y monto -->
+        <div class="form-group">
+          <label><i class="fa-solid fa-hashtag"></i> Número de referencia / comprobante</label>
+          <input type="text" name="referencia" id="inp-referencia"
+                 placeholder="Código de transacción, banco o comentario">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-dollar-sign"></i> Monto a pagar (COP)</label>
+          <input type="number" name="monto" id="inp-monto"
+                 placeholder="Ej: 2800000" min="0" step="1000"
+                 style="font-size:18px;font-weight:700;color:var(--plum);">
+          <small style="color:var(--text-light);font-size:12px;margin-top:4px;display:block;">
+            El monto se precarga segun el servicio seleccionado. Puedes ajustarlo si acordaste otro valor.
+          </small>
+        </div>
+
+        <button type="submit" name="pagar" class="btn-submit" id="btn-pagar" disabled
+                style="opacity:.5;cursor:not-allowed;">
+          <i class="fa-solid fa-lock"></i> &nbsp;Confirmar Pago
+        </button>
+
+        <p style="text-align:center;font-size:12px;color:var(--text-light);margin-top:12px;">
+          <i class="fa-solid fa-shield-halved" style="color:var(--pink-dark);"></i>
+          Tu información está protegida y segura.
+        </p>
+
+      </form>
+    </div>
+  </div>
+
+  <a href="solicitar.html" class="btn-back" style="margin-top:20px;">
+    <i class="fa-solid fa-arrow-left"></i> Volver a la Solicitud
+  </a>
+</div>
+
+<footer>
+  <div class="footer-brand">SOF-LEX CODE</div>
+  <p>2025 SOF-LEX CODE · Todos los derechos reservados</p>
+</footer>
+
+<script src="../assets/translator.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+// Cargar datos de sesión
+fetch('../api/get_pago_sesion.php').then(r => r.json()).then(d => {
+  if (!d.valido) {
+    document.getElementById('sin-sesion').style.display = 'block';
+    document.getElementById('pago-form-wrap').style.display = 'none';
+    document.getElementById('resumen-box').style.display = 'none';
+    return;
+  }
+  document.getElementById('r-nombre').textContent   = d.nombre;
+  document.getElementById('r-correo').textContent   = d.correo;
+  document.getElementById('r-servicio').textContent = d.servicio;
+
+  // Mostrar y precargar monto
+  const monto = d.monto || 0;
+  if (monto > 0) {
+    document.getElementById('r-monto').textContent =
+      '$' + monto.toLocaleString('es-CO') + ' COP';
+    document.getElementById('inp-monto').value = monto;
+  } else {
+    document.getElementById('r-monto').textContent = 'Por cotizar';
+  }
+});
+
+// Sesión pill
+fetch('../api/sesion.php').then(r => r.json()).then(d => {
+  const sp = document.getElementById('sp');
+  if (d.logueado) {
+    sp.innerHTML = `<span class="user-badge"><i class="fa-solid fa-user"></i> ${d.usuario}</span>
+      <a href="../api/logout.php" style="padding:8px 14px;border-radius:50px;background:rgba(255,255,255,.6);border:1.5px solid rgba(199,116,149,.3);color:var(--plum);text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`;
+  } else {
+    sp.innerHTML = `<a href="../index.php" style="padding:8px 14px;border-radius:50px;background:linear-gradient(135deg,var(--pink-dark),var(--plum));color:#fff;text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-lock"></i> Iniciar Sesion</a>`;
+  }
+});
+
+// Seleccionar método de pago
+let metodoActual = null;
+function selMetodo(nombre, el) {
+  document.querySelectorAll('.metodo-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input[type=radio]').checked = true;
+  metodoActual = nombre;
+
+  // Mostrar info del método
+  document.querySelectorAll('.info-metodo').forEach(i => i.classList.remove('visible'));
+  const info = document.getElementById('info-' + nombre);
+  if (info) info.classList.add('visible');
+
+  // Habilitar botón
+  const btn = document.getElementById('btn-pagar');
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  btn.style.cursor = 'pointer';
+}
+</script>
+</body>
+</html>

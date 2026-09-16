@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitar Servicio · SOF-LEX CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../assets/translator.css">
+</head>
+<body>
+
+<div id="gte-hidden" style="display:none;"></div>
+
+<header>
+  <div class="logo-wrap">
+    <img src="../logo.png" alt="SOF-LEX CODE">
+    <div>
+      <div class="brand-name">SOF-LEX CODE</div>
+      <div class="brand-tagline">Elegancia en cada línea de código</div>
+    </div>
+  </div>
+  <nav class="nav-center">
+    <a href="../index.php"><i class="fa-solid fa-house"></i> Inicio</a>
+    <a href="servicios.html"><i class="fa-solid fa-briefcase"></i> Servicios</a>
+    <a href="solicitar.html" class="active"><i class="fa-solid fa-concierge-bell"></i> Solicitar</a>
+    <a href="quejas.html"><i class="fa-solid fa-comment-dots"></i> Quejas</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <!-- TRADUCTOR -->
+    <div class="translator-wrap">
+      <button class="translator-btn" onclick="toggleLangMenu()">
+        <i class="fa-solid fa-globe"></i>
+        <span id="lang-btn-label">Idioma</span>
+        <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option active" data-lang="es" onclick="cambiarIdioma('es')"><span class="flag">🇨🇴</span> Español</button>
+        <div class="lang-divider"></div>
+        <button class="lang-option" data-lang="en" onclick="cambiarIdioma('en')"><span class="flag">🇺🇸</span> English</button>
+        <button class="lang-option" data-lang="fr" onclick="cambiarIdioma('fr')"><span class="flag">🇫🇷</span> Français</button>
+        <button class="lang-option" data-lang="pt" onclick="cambiarIdioma('pt')"><span class="flag">🇧🇷</span> Português</button>
+        <button class="lang-option" data-lang="it" onclick="cambiarIdioma('it')"><span class="flag">🇮🇹</span> Italiano</button>
+      </div>
+    </div>
+    <div id="sp"></div>
+  </div>
+</header>
+
+<div class="page-wrap" style="max-width:680px;">
+  <div style="text-align:center;margin-bottom:28px;">
+    <h1 style="font-family:'Playfair Display',serif;font-size:40px;color:var(--plum);">Solicitar Servicio</h1>
+    <p style="color:var(--text-light);margin-top:8px;">Cuéntanos qué necesitas y continúa al proceso de pago.</p>
+  </div>
+
+  <!-- Paso indicador -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:28px;">
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px 0 0 50px;background:linear-gradient(135deg,var(--pink-dark),var(--plum));color:#fff;font-size:13px;font-weight:700;">
+      <i class="fa-solid fa-circle-1" style="font-size:16px;"></i> Solicitud
+    </div>
+    <div style="width:30px;height:3px;background:rgba(199,116,149,.3);"></div>
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:0 50px 50px 0;background:rgba(255,255,255,.6);border:1.5px solid rgba(199,116,149,.2);color:var(--text-light);font-size:13px;font-weight:700;">
+      <i class="fa-solid fa-circle-2" style="font-size:16px;"></i> Pago
+    </div>
+  </div>
+
+  <div id="msg-error" class="alert alert-error" style="display:none;">
+    <i class="fa-solid fa-circle-exclamation"></i> Hubo un error. Intenta de nuevo.
+  </div>
+
+  <div class="glass-card" style="padding:32px;">
+    <form action="../api/guardar_solicitud.php" method="POST">
+
+      <input type="hidden" name="monto_ref" id="inp-monto-ref" value="0">
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-user"></i> Nombre Completo</label>
+        <input type="text" name="nombre" id="inp-nombre" placeholder="Tu nombre completo" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+        <input type="email" name="correo" placeholder="tucorreo@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-phone"></i> Teléfono</label>
+        <input type="tel" name="telefono" placeholder="Ej: 3001234567">
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-list"></i> Servicio que necesitas</label>
+        <select name="servicio" id="sel-srv" required>
+          <option value="">— Selecciona un servicio —</option>
+          <option>Desarrollo de Software</option>
+          <option>Diseño Web Profesional</option>
+          <option>Automatización de Procesos</option>
+          <option>Mantenimiento de Sistemas</option>
+          <option>Soporte Técnico</option>
+          <option>Seguridad Digital</option>
+          <option>Consultoría Tecnológica</option>
+          <option>Bases de Datos</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fa-solid fa-message"></i> Describe tu necesidad</label>
+        <textarea name="detalle" placeholder="Cuéntanos los detalles de lo que necesitas..."></textarea>
+      </div>
+
+      <button type="submit" name="enviar" class="btn-submit">
+        <i class="fa-solid fa-arrow-right"></i> &nbsp;Continuar al Pago
+      </button>
+
+    </form>
+  </div>
+
+  <a href="../index.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+</div>
+
+<footer>
+  <div class="footer-brand">SOF-LEX CODE</div>
+  <p>2025 SOF-LEX CODE · Todos los derechos reservados</p>
+</footer>
+
+<script src="../assets/translator.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+const p = new URLSearchParams(location.search);
+if (p.get('error')) document.getElementById('msg-error').style.display = 'block';
+
+const srv = p.get('srv');
+if (srv) {
+  const sel = document.getElementById('sel-srv');
+  for (let o of sel.options) { if (o.value === srv) { o.selected = true; break; } }
+}
+
+// Tabla de precios por servicio
+const PRECIOS = {
+  'Desarrollo de Software':     4500000,
+  'Diseño Web Profesional':     2800000,
+  'Automatización de Procesos': 3200000,
+  'Mantenimiento de Sistemas':  1200000,
+  'Soporte Técnico':             360000,
+  'Seguridad Digital':          3800000,
+  'Consultoría Tecnológica':     850000,
+  'Bases de Datos':             2200000
+};
+
+// Leer monto desde URL o desde tabla
+const montoUrl = parseInt(p.get('monto') || '0');
+const montoRef = montoUrl > 0 ? montoUrl : (srv ? (PRECIOS[srv] || 0) : 0);
+document.getElementById('inp-monto-ref').value = montoRef;
+
+fetch('../api/sesion.php').then(r => r.json()).then(d => {
+  const sp = document.getElementById('sp');
+  if (d.logueado) {
+    document.getElementById('inp-nombre').value = d.usuario;
+    sp.innerHTML = `<span class="user-badge"><i class="fa-solid fa-user"></i> ${d.usuario}</span>
+      <a href="../api/logout.php" style="padding:8px 14px;border-radius:50px;background:rgba(255,255,255,.6);border:1.5px solid rgba(199,116,149,.3);color:var(--plum);text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`;
+  } else {
+    sp.innerHTML = `<a href="../index.php" style="padding:8px 14px;border-radius:50px;background:linear-gradient(135deg,var(--pink-dark),var(--plum));color:#fff;text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-lock"></i> Iniciar Sesion</a>`;
+  }
+});
+</script>
+</body>
+</html>

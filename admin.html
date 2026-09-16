@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin · SOF-LEX CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    .admin-wrap { display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 100px); }
+    .admin-side {
+      background:var(--glass); backdrop-filter:blur(14px);
+      border-right:1px solid var(--glass-border);
+      padding:26px 16px; position:sticky; top:100px; height:fit-content;
+    }
+    .admin-side .sidebar-title { margin-bottom:16px; }
+    .admin-side .s-link {
+      display:flex; align-items:center; gap:10px;
+      padding:12px 14px; border-radius:var(--r-md);
+      background:linear-gradient(135deg,#fde8f2,#f9d0e4);
+      text-decoration:none; color:var(--text-main);
+      font-weight:600; font-size:13px;
+      margin-bottom:8px; border:1px solid rgba(199,116,149,.15); transition:.2s;
+      cursor:pointer; border:none; width:100%; font-family:'Nunito',sans-serif;
+    }
+    .admin-side .s-link:hover { background:linear-gradient(135deg,var(--pink-dark),var(--plum)); color:#fff; }
+    .admin-main { padding:30px; display:flex; flex-direction:column; gap:24px; }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+    .sec-title {
+      font-family:'Playfair Display',serif; font-size:24px;
+      color:var(--plum); margin-bottom:18px;
+      display:flex; align-items:center; gap:10px;
+    }
+    @media(max-width:900px){.admin-wrap{grid-template-columns:1fr;}.admin-side{position:static;}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo-wrap">
+    <img src="../logo.png" alt="SOF-LEX CODE">
+    <div><div class="brand-name">SOF-LEX CODE</div><div class="brand-tagline">Panel Administrativo</div></div>
+  </div>
+  <nav class="nav-center">
+    <a href="../index.html"><i class="fa-solid fa-house"></i> Ver Sitio</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:10px;" id="admin-header"></div>
+</header>
+
+<div class="admin-wrap">
+  <!-- SIDEBAR -->
+  <aside class="admin-side">
+    <div class="sidebar-title">Administración</div>
+    <button class="s-link" onclick="show('dashboard')"><i class="fa-solid fa-gauge" style="width:16px;"></i> Dashboard</button>
+    <button class="s-link" onclick="show('solicitudes')"><i class="fa-solid fa-concierge-bell" style="width:16px;"></i> Solicitudes</button>
+    <button class="s-link" onclick="show('quejas')"><i class="fa-solid fa-comment-dots" style="width:16px;"></i> Quejas</button>
+    <button class="s-link" onclick="show('usuarios')"><i class="fa-solid fa-users" style="width:16px;"></i> Usuarios</button>
+    <a href="../api/logout.php" class="s-link" style="margin-top:16px;"><i class="fa-solid fa-right-from-bracket" style="width:16px;"></i> Cerrar Sesión</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard" class="tab-panel active">
+      <div class="sec-title"><i class="fa-solid fa-gauge" style="color:var(--pink-dark);"></i> Dashboard</div>
+      <div class="stats-row" id="stats-row">
+        <div class="stat-card"><i class="fa-solid fa-spinner fa-spin"></i><div class="lbl">Cargando...</div></div>
+      </div>
+      <div class="glass-card" style="padding:30px;margin-top:22px;">
+        <h2 id="welcome-msg" style="font-family:'Playfair Display',serif;color:var(--plum);font-size:26px;margin-bottom:10px;">Bienvenida 💗</h2>
+        <p style="color:var(--text-light);line-height:1.8;">Desde este panel puedes gestionar todas las solicitudes de servicio, revisar quejas y sugerencias, y administrar los usuarios del sistema.</p>
+      </div>
+    </div>
+
+    <!-- SOLICITUDES -->
+    <div id="tab-solicitudes" class="tab-panel">
+      <div class="sec-title"><i class="fa-solid fa-concierge-bell" style="color:var(--pink-dark);"></i> Solicitudes de Servicio</div>
+      <div class="glass-card" style="padding:26px;">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Servicio</th><th>Fecha</th><th>Estado</th></tr></thead>
+            <tbody id="tbody-sol"><tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-light);">Cargando...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUEJAS -->
+    <div id="tab-quejas" class="tab-panel">
+      <div class="sec-title"><i class="fa-solid fa-comment-dots" style="color:var(--pink-dark);"></i> Quejas y Sugerencias</div>
+      <div class="glass-card" style="padding:26px;">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Nombre</th><th>Correo</th><th>Tipo</th><th>Mensaje</th><th>Fecha</th></tr></thead>
+            <tbody id="tbody-q"><tr><td colspan="6" style="text-align:center;padding:30px;color:var(--text-light);">Cargando...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- USUARIOS -->
+    <div id="tab-usuarios" class="tab-panel">
+      <div class="sec-title"><i class="fa-solid fa-users" style="color:var(--pink-dark);"></i> Usuarios Registrados</div>
+      <div class="glass-card" style="padding:26px;">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Usuario</th><th>Correo</th><th>Rol</th><th>Estado</th></tr></thead>
+            <tbody id="tbody-usu"><tr><td colspan="5" style="text-align:center;padding:30px;color:var(--text-light);">Cargando...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer><p>© 2025 SOF-LEX CODE · Panel Administrativo</p></footer>
+
+<script>
+// ── Verificar sesión admin ──
+fetch('../api/sesion.php').then(r=>r.json()).then(d=>{
+  if(!d.logueado || d.rol !== 'admin'){
+    location.href='../index.html';
+    return;
+  }
+  document.getElementById('welcome-msg').textContent = `Bienvenida, ${d.usuario} 💗`;
+  document.getElementById('admin-header').innerHTML = `
+    <span class="user-badge"><i class="fa-solid fa-user-shield"></i> ${d.usuario}</span>
+    <a href="../api/logout.php" style="padding:8px 14px;border-radius:50px;background:linear-gradient(135deg,var(--pink-dark),var(--plum));color:#fff;text-decoration:none;font-size:13px;font-weight:700;">
+      <i class="fa-solid fa-right-from-bracket"></i> Salir
+    </a>`;
+  loadStats();
+  loadSolicitudes();
+  loadQuejas();
+  loadUsuarios();
+});
+
+// ── Tabs ──
+function show(name){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+// ── Cargar stats ──
+async function loadStats(){
+  const r = await fetch('../api/get_stats.php');
+  const d = await r.json();
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card"><i class="fa-solid fa-users"></i><div class="num">${d.usuarios}</div><div class="lbl">Usuarios</div></div>
+    <div class="stat-card"><i class="fa-solid fa-concierge-bell"></i><div class="num">${d.solicitudes}</div><div class="lbl">Solicitudes</div></div>
+    <div class="stat-card"><i class="fa-solid fa-comment-dots"></i><div class="num">${d.quejas}</div><div class="lbl">Quejas</div></div>
+    <div class="stat-card"><i class="fa-solid fa-clock"></i><div class="num">${d.pendientes}</div><div class="lbl">Pendientes</div></div>`;
+}
+
+// ── Cargar solicitudes ──
+async function loadSolicitudes(){
+  const r = await fetch('../api/get_solicitudes.php');
+  const d = await r.json();
+  const tb = document.getElementById('tbody-sol');
+  if(!d.length){ tb.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-light);">No hay solicitudes aún.</td></tr>`; return; }
+  tb.innerHTML = d.map(row=>{
+    const est = row.estado||'pendiente';
+    const cls = est==='pendiente'?'b-pending':est==='en proceso'?'b-progress':'b-done';
+    const fecha = row.fecha ? row.fecha.substring(0,10) : '—';
+    return `<tr>
+      <td>${row.id}</td>
+      <td>${esc(row.nombre)}</td>
+      <td>${esc(row.correo)}</td>
+      <td>${esc(row.telefono||'—')}</td>
+      <td>${esc(row.servicio)}</td>
+      <td>${fecha}</td>
+      <td><span class="badge ${cls}">${est}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Cargar quejas ──
+async function loadQuejas(){
+  const r = await fetch('../api/get_quejas.php');
+  const d = await r.json();
+  const tb = document.getElementById('tbody-q');
+  if(!d.length){ tb.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--text-light);">No hay quejas ni sugerencias.</td></tr>`; return; }
+  tb.innerHTML = d.map(row=>{
+    const tipo = row.tipo||'queja';
+    const cls  = tipo==='queja'?'b-pending':'b-progress';
+    const fecha = row.fecha ? row.fecha.substring(0,10) : '—';
+    const msg = esc(row.mensaje||'').substring(0,80)+(row.mensaje&&row.mensaje.length>80?'...':'');
+    return `<tr>
+      <td>${row.id}</td>
+      <td>${esc(row.nombre)}</td>
+      <td>${esc(row.correo)}</td>
+      <td><span class="badge ${cls}">${tipo}</span></td>
+      <td style="max-width:240px;">${msg}</td>
+      <td>${fecha}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Cargar usuarios ──
+async function loadUsuarios(){
+  const r = await fetch('../api/get_usuarios.php');
+  const d = await r.json();
+  const tb = document.getElementById('tbody-usu');
+  if(!d.length){ tb.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--text-light);">No hay usuarios.</td></tr>`; return; }
+  tb.innerHTML = d.map(row=>{
+    const rcls = row.rol==='admin'?'b-admin':'b-cliente';
+    const ecls = row.estado==='Activo'?'b-done':'b-pending';
+    return `<tr>
+      <td>${row.id}</td>
+      <td><i class="fa-solid fa-user" style="color:var(--pink-dark);margin-right:6px;"></i>${esc(row.usuario)}</td>
+      <td>${esc(row.correo)}</td>
+      <td><span class="badge ${rcls}">${row.rol}</span></td>
+      <td><span class="badge ${ecls}">${row.estado||'Activo'}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+</script>
+</body>
+</html>

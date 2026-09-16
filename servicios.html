@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servicios · SOF-LEX CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../assets/translator.css">
+  <style>
+    .srv-full-card {
+      background: rgba(255,255,255,0.78);
+      border: 1.5px solid rgba(199,116,149,0.15);
+      border-radius: 24px;
+      padding: 28px 26px;
+      display: flex; gap: 22px; align-items: flex-start;
+      transition: .28s; margin-bottom: 18px;
+      position: relative; overflow: hidden;
+    }
+    .srv-full-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background: linear-gradient(90deg, var(--pink-dark), var(--purple));
+      opacity: 0; transition: .28s;
+    }
+    .srv-full-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 36px rgba(199,116,149,.18);
+      background: #fff;
+    }
+    .srv-full-card:hover::before { opacity: 1; }
+
+    .srv-full-icon {
+      width: 64px; height: 64px; flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fde8f2, #f5c8e0);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; color: var(--pink-dark);
+      box-shadow: 0 4px 12px rgba(199,116,149,.2);
+    }
+
+    .srv-full-info { flex: 1; }
+    .srv-full-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: var(--plum);
+      margin-bottom: 8px;
+    }
+    .srv-full-info .srv-desc {
+      font-size: 14px; color: var(--text-light);
+      line-height: 1.75; margin-bottom: 14px;
+    }
+
+    .srv-price-row {
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(199,116,149,.12);
+    }
+
+    .price-block { display: flex; flex-direction: column; }
+    .price-label {
+      font-size: 11px; font-weight: 700;
+      color: var(--text-light); text-transform: uppercase;
+      letter-spacing: .5px; margin-bottom: 3px;
+    }
+    .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-weight: 700;
+      color: var(--plum); line-height: 1;
+    }
+    .price-amount span {
+      font-size: 13px; color: var(--text-light);
+      font-family: 'Nunito', sans-serif; font-weight: 600;
+    }
+    .price-note {
+      font-size: 11px; color: var(--text-light); margin-top: 2px;
+    }
+
+    .srv-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--pink-dark), var(--plum));
+      color: #fff; text-decoration: none;
+      font-size: 13px; font-weight: 700; transition: .2s;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(199,116,149,.3);
+    }
+    .srv-btn:hover { opacity: .88; transform: translateY(-2px); }
+
+    .badge-categoria {
+      display: inline-block; padding: 3px 10px; border-radius: 50px;
+      font-size: 11px; font-weight: 700; margin-bottom: 8px;
+    }
+    .cat-dev  { background:#f3e5f5; color:#7b1fa2; }
+    .cat-dis  { background:#fce4ec; color:#c2185b; }
+    .cat-ops  { background:#e8f5e9; color:#2e7d32; }
+    .cat-seg  { background:#e3f2fd; color:#1565c0; }
+    .cat-con  { background:#fff3e0; color:#e65100; }
+    .cat-dat  { background:#f1f8e9; color:#558b2f; }
+  </style>
+</head>
+<body>
+
+<div id="gte-hidden" style="display:none;"></div>
+
+<header>
+  <div class="logo-wrap">
+    <img src="../logo.png" alt="SOF-LEX CODE">
+    <div>
+      <div class="brand-name">SOF-LEX CODE</div>
+      <div class="brand-tagline">Elegancia en cada línea de código</div>
+    </div>
+  </div>
+  <nav class="nav-center">
+    <a href="../index.php"><i class="fa-solid fa-house"></i> Inicio</a>
+    <a href="servicios.html" class="active"><i class="fa-solid fa-briefcase"></i> Servicios</a>
+    <a href="solicitar.html"><i class="fa-solid fa-concierge-bell"></i> Solicitar</a>
+    <a href="quejas.html"><i class="fa-solid fa-comment-dots"></i> Quejas</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="translator-wrap">
+      <button class="translator-btn" onclick="toggleLangMenu()">
+        <i class="fa-solid fa-globe"></i>
+        <span id="lang-btn-label">Idioma</span>
+        <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-option active" data-lang="es" onclick="cambiarIdioma('es')"><span class="flag">🇨🇴</span> Español</button>
+        <div class="lang-divider"></div>
+        <button class="lang-option" data-lang="en" onclick="cambiarIdioma('en')"><span class="flag">🇺🇸</span> English</button>
+        <button class="lang-option" data-lang="fr" onclick="cambiarIdioma('fr')"><span class="flag">🇫🇷</span> Français</button>
+        <button class="lang-option" data-lang="pt" onclick="cambiarIdioma('pt')"><span class="flag">🇧🇷</span> Português</button>
+        <button class="lang-option" data-lang="it" onclick="cambiarIdioma('it')"><span class="flag">🇮🇹</span> Italiano</button>
+      </div>
+    </div>
+    <div id="sp"></div>
+  </div>
+</header>
+
+<div class="page-wrap" style="max-width:920px;">
+
+  <div style="text-align:center;margin-bottom:36px;">
+    <h1 style="font-family:'Playfair Display',serif;font-size:42px;color:var(--plum);margin-bottom:10px;">
+      Nuestros Servicios
+    </h1>
+    <p style="color:var(--text-light);font-size:16px;max-width:580px;margin:0 auto;line-height:1.7;">
+      Soluciones tecnologicas de alto nivel con precios justos para empresas que buscan calidad real.
+      Todos los precios son en pesos colombianos (COP).
+    </p>
+  </div>
+
+  <!-- 1. Desarrollo de Software -->
+  <div class="srv-full-card">
+    <div class="srv-full-icon"><i class="fa-solid fa-code"></i></div>
+    <div class="srv-full-info">
+      <span class="badge-categoria cat-dev">Desarrollo</span>
+      <h3>Desarrollo de Software</h3>
+      <div class="srv-desc">
+        Creamos aplicaciones web y de escritorio completamente a medida, adaptadas a los procesos
+        unicos de tu empresa. Desde sistemas de gestion interna hasta plataformas complejas con
+        multiples usuarios y roles. Incluye analisis de requerimientos, desarrollo, pruebas y entrega.
+      </div>
+      <div class="srv-price-row">
+        <div class="price-block">
+          <div class="price-label">Precio desde</div>
+          <div class="price-amount">$4.500.000 <span>COP</span></div>
+          <div class="price-note">Segun alcance del proyecto</div>
+        </div>
+        <a href="solicitar.html?srv=Desarrollo+de+Software&monto=4500000" class="srv-btn">
+          <i class="fa-solid fa-concierge-bell"></i> Solicitar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Diseño Web -->
+  <div class="srv-full-card">
+    <div class="srv-full-icon"><i class="fa-solid fa-globe"></i></div>
+    <div class="srv-full-info">
+      <span class="badge-categoria cat-dis">Diseño</span>
+      <h3>Diseño Web Profesional</h3>
+      <div class="srv-desc">
+        Diseñamos sitios web modernos, elegantes y 100% responsivos que reflejan la identidad de tu
+        marca. Incluye diseño UI/UX personalizado, animaciones, optimizacion de velocidad y
+        compatibilidad con todos los dispositivos y navegadores.
+      </div>
+      <div class="srv-price-row">
+        <div class="price-block">
+          <div class="price-label">Precio desde</div>
+          <div class="price-amount">$2.800.000 <span>COP</span></div>
+          <div class="price-note">Sitio completo con hasta 8 paginas</div>
+        </div>
+        <a href="solicitar.html?srv=Diseño+Web+Profesional&monto=2800000" class="srv-btn">
+          <i class="fa-solid fa-concierge-bell"></i> Solicitar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Automatización -->
+  <div class="srv-full-card">
+    <div class="srv-full-icon"><i class="fa-solid fa-gears"></i></div>
+    <div class="srv-full-info">
+      <span class="badge-categoria cat-ops">Automatizacion</span>
+      <h3>Automatizacion de Procesos</h3>
+      <div class="srv-desc">
+        Identificamos y automatizamos tareas repetitivas en tu empresa usando scripts, bots y
+        herramientas de integracion. Reducimos errores humanos, liberamos tiempo del equipo y
+        conectamos sistemas que hoy operan por separado.
+      </div>
+      <div class="srv-price-row">
+        <div class="price-block">
+          <div class="price-label">Precio desde</div>
+          <div class="price-amount">$3.200.000 <span>COP</span></div>
+          <div class="price-note">Por flujo automatizado</div>
+        </div>
+        <a href="solicitar.html?srv=Automatización+de+Procesos&monto=3200000" class="srv-btn">
+          <i class="fa-solid fa-concierge-bell"></i> Solicitar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Mantenimiento -->
+  <div class="srv-full-card">
+    <div class="srv-full-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+    <div class="srv-full-info">
+      <span class="badge-categoria cat-ops">Mantenimiento</span>
+      <h3>Mantenimiento de Sistemas</h3>
+      <div class="srv-desc">
+        Mantenemos tus sistemas actualizados, seguros y al maximo rendimiento con revisiones
+        periodicas, parches de seguridad, copias de seguridad y correccion de errores. Plan
+        mensual con horas de soporte incluidas.
+      </div>
+      <div class="srv-price-row">
+        <div class="price-block">
+          <div class="price-label">Plan mensual desde</div>
+          <div class="price-amount">$1.200.000 <span>COP/mes</span></div>
+          <div class="price-note">Incluye 10 horas de soporte</div>
+        </div>
+        <a href="solicitar.html?srv=Mantenimiento+de+Sistemas&monto=1200000" class="srv-btn">
+          <i class="fa-solid fa-concierge-bell"></i> Solicitar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Soporte Técnico -->
+  <div class="srv-full-card">
+    <div class="srv-full-icon"><i class="fa-solid fa-headset"></i></div>
+    <div class="srv-full-info">
+      <span class="badge-categoria cat-con">Soporte</span>
+      <h3>Soporte Tecnico</h3>
+      <div class="srv-desc">
+        Asistencia tecnica especializada para resolver cualquier incidente de forma rapida.
+        Atencion remota via videoconferencia o TeamViewer y presencial en Bogota.
+        Tiempo de respuesta garantizado en menos de 4 horas habiles.
+      </div>
+      <div class="srv-price-row">
+        <div class="price-block">
+          <div class="price-label">Por hora de soporte</div>
+          <div class="price-amount">$180.000 <span>COP/h</span></div>
+          <div class="price-note">Minimo 2 horas por sesion</div>
+        </div>
+        <a href="solicitar.html?srv=Soporte+Técnico&monto=360000" class="srv-btn">
+          <i class="fa-solid fa-concierge-bell"></i> Solicitar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Seguridad Digital -->
+  <div class="srv-full-card">
+    <div class="srv-full-icon"><i class="fa-solid fa-shield-halved"></i></div>
+    <div class="srv-full-info">
+      <span class="badge-categoria cat-seg">Seguridad</span>
+      <h3>Seguridad Digital</h3>
+      <div class="srv-desc">
+        Auditoria completa de seguridad, pruebas de penetracion, configuracion de firewalls y
+        cifrado de datos. Identificamos vulnerabilidades en tu infraestructura y entregamos
+        un informe detallado con plan de accion correctivo.
+      </div>
+      <div class="srv-price-row">
+        <div class="price-block">
+          <div class="price-label">Auditoria completa desde</div>
+          <div class="price-amount">$3.800.000 <span>COP</span></div>
+          <div class="price-note">Informe + plan correctivo incluido</div>
+        </div>
+        <a href="solicitar.html?srv=Seguridad+Digital&monto=3800000" class="srv-btn">
+          <i class="fa-solid fa-concierge-bell"></i> Solicitar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Consultoría -->
+  <div class="srv-full-card">
+    <div class="srv-full-icon"><i class="fa-solid fa-lightbulb"></i></div>
+    <div class="srv-full-info">
+      <span class="badge-categoria cat-con">Consultoria</span>
+      <h3>Consultoria Tecnologica</h3>
+      <div class="srv-desc">
+        Sesiones estrategicas con nuestros expertos para evaluar tu infraestructura actual,
+        definir la hoja de ruta tecnologica de tu empresa y tomar decisiones informadas sobre
+        inversion en software, hardware y seguridad.
+      </div>
+      <div class="srv-price-row">
+        <div class="price-block">
+          <div class="price-label">Por sesion (2 horas)</div>
+          <div class="price-amount">$850.000 <span>COP</span></div>
+          <div class="price-note">Incluye informe escrito de recomendaciones</div>
+        </div>
+        <a href="solicitar.html?srv=Consultoría+Tecnológica&monto=850000" class="srv-btn">
+          <i class="fa-solid fa-concierge-bell"></i> Solicitar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Bases de Datos -->
+  <div class="srv-full-card">
+    <div class="srv-full-icon"><i class="fa-solid fa-database"></i></div>
+    <div class="srv-full-info">
+      <span class="badge-categoria cat-dat">Base de Datos</span>
+      <h3>Bases de Datos</h3>
+      <div class="srv-desc">
+        Diseño, modelado, optimizacion y administracion de bases de datos relacionales y no
+        relacionales. MySQL, PostgreSQL, MongoDB, SQL Server. Incluye migracion de datos,
+        indices, copias de seguridad automaticas y monitoreo de rendimiento.
+      </div>
+      <div class="srv-price-row">
+        <div class="price-block">
+          <div class="price-label">Diseño e implementacion desde</div>
+          <div class="price-amount">$2.200.000 <span>COP</span></div>
+          <div class="price-note">Segun complejidad y volumen de datos</div>
+        </div>
+        <a href="solicitar.html?srv=Bases+de+Datos&monto=2200000" class="srv-btn">
+          <i class="fa-solid fa-concierge-bell"></i> Solicitar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nota de precios -->
+  <div class="glass-card" style="padding:22px 26px;margin-top:8px;display:flex;gap:16px;align-items:center;">
+    <i class="fa-solid fa-circle-info" style="font-size:24px;color:var(--pink-dark);flex-shrink:0;"></i>
+    <div>
+      <div style="font-weight:700;color:var(--plum);margin-bottom:4px;">Sobre los precios</div>
+      <div style="font-size:13px;color:var(--text-light);line-height:1.7;">
+        Los precios mostrados son valores de referencia. El costo final se determina segun el
+        alcance, complejidad y tiempo del proyecto. Solicita una cotizacion sin costo y un asesor
+        te contactara en menos de 24 horas.
+      </div>
+    </div>
+  </div>
+
+  <a href="../index.php" class="btn-back" style="margin-top:22px;">
+    <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+  </a>
+</div>
+
+<footer>
+  <div class="footer-brand">SOF-LEX CODE</div>
+  <div class="socials">
+    <a href="https://wa.me/573001234567" target="_blank" class="soc-wa"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://instagram.com/" target="_blank" class="soc-ig"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://facebook.com/" target="_blank" class="soc-fb"><i class="fa-brands fa-facebook-f"></i></a>
+    <a href="https://x.com/" target="_blank" class="soc-tw"><i class="fa-brands fa-x-twitter"></i></a>
+  </div>
+  <p>2025 SOF-LEX CODE · Todos los derechos reservados</p>
+</footer>
+
+<script src="../assets/translator.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+fetch('../api/sesion.php').then(r => r.json()).then(d => {
+  const sp = document.getElementById('sp');
+  if (d.logueado) {
+    sp.innerHTML = `<span class="user-badge"><i class="fa-solid fa-user"></i> ${d.usuario}</span>
+    <a href="../api/logout.php" style="padding:8px 14px;border-radius:50px;background:rgba(255,255,255,.6);border:1.5px solid rgba(199,116,149,.3);color:var(--plum);text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>`;
+  } else {
+    sp.innerHTML = `<a href="../index.php" style="padding:8px 14px;border-radius:50px;background:linear-gradient(135deg,var(--pink-dark),var(--plum));color:#fff;text-decoration:none;font-size:13px;font-weight:700;"><i class="fa-solid fa-lock"></i> Iniciar Sesion</a>`;
+  }
+});
+</script>
+</body>
+</html>
